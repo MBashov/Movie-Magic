@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import homeControler from './controllers/homeController.js';
 
-const router = Router();
-router.use(homeControler);
+const routes = Router();
+routes.use(homeControler);
 
-router.get('*', (req, res) => {
+routes.get('*', (req, res) => {
     res.render('404');
 });
 
 
-export default router;
+export default routes;
