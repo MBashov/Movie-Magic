@@ -1,6 +1,6 @@
 import express from 'express';
 import handlebars from 'express-handlebars';
-
+import homeControler from './controllers/homeController.js'
 const app = express();
 
 app.engine('hbs', handlebars.engine({
@@ -10,6 +10,7 @@ app.set('view engine', 'hbs');
 app.set('views', './src/views')
 
 app.use('/static', express.static('src/public'));
+app.use(homeControler);
 
 app.get('/', (req, res) => {
     res.render('home');
