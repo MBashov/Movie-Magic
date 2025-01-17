@@ -10,6 +10,9 @@ movieController.get('/create', (req, res) => {
 
 movieController.post('/create', (req, res) => {
     const newMmovie = req.body;
+
+    movieService.create(newMmovie);
+    res.redirect('/');
      
     res.end();
 });
@@ -18,9 +21,6 @@ movieController.get('/:movieId/details', (req, res) => {
     const movieId = req.params.movieId;
 
     const movie = movieService.findOne(movieId);
-
-    console.log(movie);
-
 
     res.render('details', { movie });
 });
