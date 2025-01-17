@@ -3,8 +3,12 @@ import movies from "../movies.js";
 
 export default {
 
-    getAll() {
-        return movies;
+    getAll(filter = {}) {
+        let result = movies;
+
+        if (filter.search) {
+            result = result.filter(movie => movie.title.toLowerCase().includes(filter.search.toLowerCase()));
+        }
     },
 
     findOne(movieId) {
@@ -13,7 +17,7 @@ export default {
 
         return movie;
     },
-    
+
     create(movieData) {
         const id = uuid();
 
