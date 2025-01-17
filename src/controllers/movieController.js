@@ -8,6 +8,10 @@ movieController.get('/create', (req, res) => {
     res.render('create');
 });
 
+movieController.get('/search', (req, res) => {
+    res.render('search');
+});
+
 movieController.post('/create', (req, res) => {
     const newMmovie = req.body;
 
