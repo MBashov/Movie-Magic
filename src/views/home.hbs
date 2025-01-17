@@ -2,14 +2,14 @@
     <h1>All Movies</h1>
     <div class="band">
 
-        <!-- If there are posts for creature in the database display each of them -->
         {{#each movies}}
+
             {{>movie}}
-        <!-- If there are still no posts in the database display: -->
+
         {{else}}
-        <div class="no-posts">
-            <p class="no-offer">There are no posts yet...</p>
-        </div>
+            <div class="no-posts">
+                <p class="no-offer">There are no posts yet...</p>
+            </div>
         {{/each}}
     </div>
 </section>
