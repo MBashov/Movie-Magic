@@ -1,4 +1,5 @@
 import { Router } from "express"; 
+import authService from "../services/authService.js";
 
 const authController = Router();
 
@@ -10,8 +11,8 @@ authController.post('/register', async (req, res) => {
     
     const userData = req.body;
     
-
+    authService.register(userData);
     
-    res.end();
+    res.redirect('/');
 });
 export default authController;
