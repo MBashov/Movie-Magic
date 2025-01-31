@@ -7,8 +7,8 @@ castController.get('/create', (req, res) => {
     res.render('cast/create');
 });
 
-castController.post('/create', async (req, res) => {
-    const newCast = await req.body;
+castController.post('/create', (req, res) => {
+    const newCast = req.body;
 
     castService.create(newCast);
 

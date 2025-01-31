@@ -26,13 +26,14 @@ export default {
         return movie;
     },
 
-    create(movieData) {
+    create(movieData, userId) {
 
         const result = Movie.create({
             ...movieData,
             rating: Number(movieData.rating),
             year: Number(movieData.year),
-        })
+            creator: userId,
+        });
 
         return result;
     },

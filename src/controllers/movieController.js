@@ -16,10 +16,11 @@ movieController.get('/search', async (req, res) => {
     res.render('search', { movies, filter });
 });
 
-movieController.post('/create', async (req, res) => {
-    const newMmovie = await req.body;
+movieController.post('/create', (req, res) => {
+    const newMmovie = req.body;
+    const userId = req.user.id;
 
-    movieService.create(newMmovie);
+    movieService.create(newMmovie, userId);
     res.redirect('/');
 
     res.end();
