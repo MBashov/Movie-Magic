@@ -18,11 +18,11 @@ movieController.get('/create', isAuth, (req, res) => {
     res.render('create');
 });
 
-movieController.post('/create', isAuth, (req, res) => {
+movieController.post('/create', isAuth, async (req, res) => {
     const newMmovie = req.body;
-    const userId = req.user.id;
+    const userId = req.user?.id;
 
-    movieService.create(newMmovie, userId);
+    await movieService.create(newMmovie, userId);
     res.redirect('/');
 
     res.end();
@@ -52,7 +52,7 @@ movieController.post('/:movieId/attach-cast', isAuth, async (req, res) => {
     const castId = req.body.cast;
     const movieId = req.params.movieId;
 
-    movieService.attachCast(castId, movieId);
+    await movieService.attachCast(castId, movieId);
 
     res.redirect(`/movies/${movieId}/details`);
     res.end();
@@ -82,6 +82,8 @@ movieController.get('/:movieid/edit', isAuth, async (req, res) => {
 movieController.post('/:movieId/edit', isAuth, async (req, res) => {
     const movieId = req.params.movieId;
     const movieData = req.body;
+
+    //TODO: Check if creeator
 
     await movieService.update(movieId, movieData);
 
