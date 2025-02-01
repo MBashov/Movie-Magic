@@ -1,6 +1,7 @@
 import { Router } from "express";
 import movieService from "../services/movieService.js";
 import castService from "../services/castService.js";
+import getCategoriesViewData from "../helpers/movieCategoriesHelper.js";
 
 
 const movieController = Router();
@@ -73,7 +74,8 @@ movieController.get('/:movieid/edit', async (req, res) => {
     const movieId = req.params.movieid;
     const movie = await movieService.getOne(movieId);
 
-    res.render('movie/edit', { movie });
+    const categories = getCategoriesViewData(movie.category);
+    res.render('movie/edit', { movie, categories });
 });
 
 export default movieController; 
