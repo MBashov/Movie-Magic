@@ -8,7 +8,17 @@ const movieSchema = new Schema({
         minLength: [2, 'Title should be at least 2 characters long!'],
         match: [/^[a-zA-Z0-9\s]+$/, 'Title should be alphanumeric, digits and whitespaces only!'],
     },
-    category: String,
+    category: {
+        type: String,
+        required: true,
+        enum: [
+            'tv-show',
+            'animation',
+            'movie',
+            'documentary',
+            'short-film',
+        ],
+    },
     genre: {
         type: String,
         required: [true, 'Genre is required!'],

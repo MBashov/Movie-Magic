@@ -5,6 +5,7 @@ const userSchrema = new Schema({
     'email': {
         type: String,
         unique: true,
+        lowercase: true, // Sanitizer
         match: [/[\w]+\@[a-zA-Z]+.[a-zA-Z]+$/, 'Invalid email'],
         minLength: [10, 'Email should be at least 10 characters long!'],
     },
@@ -12,6 +13,7 @@ const userSchrema = new Schema({
         type: String,
         match: [/^\w+$/, 'Password should consist English letters and digits only!'],
         minLength: [6, 'Password should be at least 6 characters long'],
+        trim: true // Sanitizer
     },
 });
 
