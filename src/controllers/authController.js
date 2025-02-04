@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authService from "../services/authService.js";
 import { isAuth } from "../middlewares/authMiddleware.js";
+import { getErrorMessage } from "../utils/errorUtils.js";
 
 const authController = Router();
 
@@ -12,9 +13,13 @@ authController.post('/register', async (req, res) => {
 
     const userData = req.body;
 
-    await authService.register(userData);
+    try {
+        await authService.register(userData);
+        res.redirect('/auth/login');
+    } catch (error) {
+        console.log(getErrorMessage(error));
+    }
 
-    res.redirect('/auth/login');
 });
 
 authController.get('/login', (req, res) => {
