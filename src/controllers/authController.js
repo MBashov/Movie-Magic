@@ -17,7 +17,7 @@ authController.post('/register', async (req, res) => {
         await authService.register(userData);
         res.redirect('/auth/login');
     } catch (error) {
-        res.render('auth/register', { error: getErrorMessage(error) });
+        return res.render('auth/register', { error: getErrorMessage(error) });
     }
 
 });
@@ -35,8 +35,7 @@ authController.post('/login', async (req, res) => {
         res.cookie('auth', token);
         res.redirect('/');
     } catch (error) {
-        console.log(error.message);
-        res.redirect('/404');
+        return res.render('auth/login', { error: getErrorMessage(error) });
     }
 
 });
