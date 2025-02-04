@@ -2,12 +2,28 @@ import { Schema, model } from "mongoose";
 import bcrypt from 'bcrypt';
 
 const userSchrema = new Schema({
-    'email': String,
-    'password': String,
+    'email': {
+        type: String,
+        unique: true,
+        match: [/[\w]+\@[a-zA-Z]+.[a-zA-Z]+$/, 'Invalid email'],
+        minLength: [10, 'Email should be at least 10 characters long!'],
+    },
+    'password': {
+        type: String,
+        match: [/^\w+$/, 'Password should consist English letters and digits only!'],
+        minLength: [6, 'Password should be at least 6 characters long'],
+    },
 });
 
+//* Virtual property
+userSchrema.virtual('rePassword')
+    .set(function(value) {
+        if (value !== this.password) {
+            throw new Error('Password don\'t match!');
+        }
+    });
+
 userSchrema.pre('save', async function () {
-    //TODO: Fix update user bug
     this.password = await bcrypt.hash(this.password, 10);
 });
 

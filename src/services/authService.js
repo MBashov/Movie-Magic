@@ -6,7 +6,18 @@ const SECRET = '$1w$10$1KTze.DQ8FnS86EhYI9D2eX3vGbuCCyDjQaWtpiw/T8MwdO2QJ1rS';
 
 export default {
 
-    register(userData) {
+    async register(userData) {
+        // *Check if password match rePassword - Error handled in User Model with virtual Property!!!
+        // if (userData.password !== userData.rePass) {
+        //     throw new Error ('Password missmatch!');
+        // }
+
+        // Check if email exist
+        const userCount = await User.countDocuments({ email: userData.email });
+        if (userCount > 0) {
+            throw new Error ('Email already exist!')
+        }
+
         return User.create(userData);
     },
 
