@@ -29,7 +29,7 @@ const movieSchema = new Schema({
     },
     imageUrl: {
         type: String,
-        match: /^https?:\/\//
+        match: [/^https?:\/\//, 'Image url should starts with http://... or https://..'],
     },
     rating: {
         type: Number,
@@ -41,7 +41,7 @@ const movieSchema = new Schema({
         type: String,
         required: [true, 'Description is required!'],
         minLength: [20, 'Description should be at least 20 characters long!'],
-        match: [/^[a-zA-Z0-9\s]+$/, 'Description should be alphanumeric, digits and whitespaces only!']
+        match: [/[\w\s+,.!?'"-]+/, 'Description should be alphanumeric, digits and whitespaces only!'],
     },
     casts: [{
         type: Types.ObjectId,
