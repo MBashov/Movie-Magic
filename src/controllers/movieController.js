@@ -32,7 +32,8 @@ movieController.post('/create', isAuth, async (req, res) => {
         await movieService.create(newMovie, userId);
         res.redirect('/');
     } catch (error) {
-        res.render('movie/create', { newMovie, error: getErrorMessage(error) });
+        const categories = getCategoriesViewData(newMovie.category);
+        res.render('movie/create', { newMovie, categories, error: getErrorMessage(error) });
     }
 
 });
