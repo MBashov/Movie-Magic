@@ -32,24 +32,23 @@ movieController.post('/create', isAuth, async (req, res) => {
         await movieService.create(newMovie, userId);
         res.redirect('/');
     } catch (error) {
-        res.render('movie/create', { error: getErrorMessage(error), newMovie });
+        res.render('movie/create', { newMovie, error: getErrorMessage(error) });
     }
 
 });
 
 movieController.get('/:movieId/details', async (req, res) => {
     const movieId = req.params.movieId;
-    const movie = await movieService.getOne(movieId).populate('casts');;
-
-    const isCreator = movie.creator?.equals(req.user?.id);
 
     try {
         const movie = await movieService.getOne(movieId).populate('casts');
 
+        const isCreator = movie.creator?.equals(req.user?.id);
 
         res.render('movie/details', { movie, isCreator });
+
     } catch (error) {
-        res.render('/404', { error: getErrorMessage(error) });
+        res.render('404', { error: getErrorMessage(error) });
     }
 });
 
@@ -58,11 +57,18 @@ movieController.get('/:movieId/attach-cast', isAuth, async (req, res) => {
 
     try {
         const movie = await movieService.getOne(movieId);
-        const casts = await castService.getAll({ exclude: [movie.casts] });
 
+        const isCreator = movie.creator?.equals(req.user?.id);
+
+        if (!isCreator) {
+            return res.render('404', { error: 'You are not the movie owner!' });
+        }
+
+        const casts = await castService.getAll({ exclude: [movie.casts] });
         res.render('movie/attachCast', { movie, casts });
+
     } catch (error) {
-        res.render('/404', { error: getErrorMessage(error) });
+        res.render('404', { error: getErrorMessage(error) });
     }
 
 });
@@ -71,23 +77,42 @@ movieController.post('/:movieId/attach-cast', isAuth, async (req, res) => {
     const castId = req.body.cast;
     const movieId = req.params.movieId;
 
-    await movieService.attachCast(castId, movieId);
+    try {
+        const movie = await movieService.getOne(movieId);
 
-    res.redirect(`/movies/${movieId}/details`);
+        const isCreator = movie.creator?.equals(req.user?.id);
+
+        if (!isCreator) {
+            return res.render('404', { error: 'You are not the movie owner!' });
+        }
+
+        await movieService.attachCast(castId, movieId);
+        res.redirect(`/movies/${movieId}/details`);
+
+    } catch (error) {
+        res.render('404', { error: getErrorMessage(error) });
+    }
+
 
 });
 
 movieController.get('/:movieId/delete', isAuth, async (req, res) => {
     const movieId = req.params.movieId;
-    const movie = await movieService.getOne(movieId);
 
-    if (!movie.creator.equals(req.user?.id)) {
-        return res.redirect('/404');
+    try {
+        const movie = await movieService.getOne(movieId);
+
+        if (!movie.creator.equals(req.user?.id)) {
+            return res.render('404', { error: 'You are not the movie owner!' });
+        }
+
+        await movieService.delete(movieId);
+
+        res.redirect('/');
+
+    } catch (error) {
+        res.render('404', { error: getErrorMessage(error) });
     }
-
-    await movieService.delete(movieId);
-
-    res.redirect('/');
 });
 
 movieController.get('/:movieid/edit', isAuth, async (req, res) => {
