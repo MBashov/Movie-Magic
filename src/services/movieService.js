@@ -48,7 +48,7 @@ export default {
         // return movie;
 
         // *Type 2
-        return Movie.findByIdAndUpdate(movieId, { $push: { casts: castId } });
+        return Movie.findByIdAndUpdate(movieId, { $push: { casts: castId } }, { runValidators: true });
     },
 
     delete(movieId) {
@@ -56,7 +56,7 @@ export default {
     },
 
     update(movieId, movieData) {
-        return Movie.findByIdAndUpdate(movieId, movieData);
+        return Movie.findByIdAndUpdate(movieId, movieData, { runValidators: true });
     }
 
 } 
