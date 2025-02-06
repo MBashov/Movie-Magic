@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
-
-const SECRET = '$1w$10$1KTze.DQ8FnS86EhYI9D2eX3vGbuCCyDjQaWtpiw/T8MwdO2QJ1rS';
+import { JWT_SECRET } from '../config.js';
 
 export const authMiddleware = (req, res, next) => {
     // Get token
@@ -12,7 +11,7 @@ export const authMiddleware = (req, res, next) => {
     
     try {
         // Validate token   
-        const decodedToken = jwt.verify(token, SECRET);  
+        const decodedToken = jwt.verify(token, JWT_SECRET);  
 
         // Attached decoded token to requset
         req.user = decodedToken;

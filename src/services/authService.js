@@ -1,27 +1,41 @@
 import User from "../models/User.js"
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-
-const SECRET = '$1w$10$1KTze.DQ8FnS86EhYI9D2eX3vGbuCCyDjQaWtpiw/T8MwdO2QJ1rS';
+import { genereteToken } from "../utils/authUtils.js";
 
 export default {
 
     async register(userData) {
         // *Check if password match rePassword - Error handled in User Model with virtual Property!!!
         // if (userData.password !== userData.rePass) {
-        //     throw new Error ('Password missmatch!');
+        //     throw new Error ('Password don\'t match!');
         // }
 
-        // Check if email exist
-        const userCount = await User.countDocuments({ email: userData.email });
-        if (userCount > 0) {
-            throw new Error ('Email already exist!')
+        if (!userData.email) {
+            throw new Error('Email is required!');
         }
 
-        return User.create(userData);
+        // Check if email exist
+        const user = await User.findOne({ email: userData.email }).select({ _id: true });
+        if (user) {
+            throw new Error('Email already exist!');
+        }
+
+        if (!userData.password) {
+            throw new Error('Password is required!');
+        }
+
+        const createdUser = await User.create(userData);
+
+        const token = genereteToken(createdUser);
+
+        return token;
     },
 
     async login(email, password) {
+        if (!email) {
+            throw new Error('Email is required!');
+        }
+
         // Check if user exist
         const user = await User.findOne({ email });
         if (!user) {
@@ -31,16 +45,12 @@ export default {
         // Check if password is correct
         const isValid = await bcrypt.compare(password, user.password);
         if (!isValid) {
-            throw new Error('Invalid password or password!');
+            throw new Error('Invalid email or password!');
         }
 
         // Generate token
-        const paylod = {
-            id: user.id,
-            email: user.email
-        }
-        // TODO: Use async function
-        const token = jwt.sign(paylod, SECRET, { expiresIn: '2h' });
+        const token = genereteToken(user);
+
         return token;
     }
 
