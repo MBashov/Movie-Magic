@@ -25,7 +25,11 @@ app.engine('hbs', handlebars.engine({
         allowProtoPropertiesByDefault: true
     },
     helpers: {
-        showRating: showRatingHelper
+        showRating: showRatingHelper,
+        setTitle(title) {
+            this.pageTitle = title;
+            return '';
+        }
     }
 }));
 app.set('view engine', 'hbs');
