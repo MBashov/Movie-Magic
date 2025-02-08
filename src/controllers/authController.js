@@ -1,16 +1,16 @@
 import { Router } from "express";
 import authService from "../services/authService.js";
-import { isAuth } from "../middlewares/authMiddleware.js";
+import { auth, isAuth } from "../middlewares/authMiddleware.js";
 import { getErrorMessage } from "../utils/errorUtils.js";
 import { AUTH_COOKIE_NAME } from "../config.js";
 
 const authController = Router();
 
-authController.get('/register', (req, res) => {
+authController.get('/register', auth, (req, res) => {
     res.render('auth/register');
 });
 
-authController.post('/register', async (req, res) => {
+authController.post('/register',  auth, async (req, res) => {
     const userData = req.body;
 
     try {
@@ -24,11 +24,11 @@ authController.post('/register', async (req, res) => {
 
 });
 
-authController.get('/login', (req, res) => {
+authController.get('/login', auth, (req, res) => {
     res.render('auth/login');
 });
 
-authController.post('/login', async (req, res) => {
+authController.post('/login',  auth, async (req, res) => {
 
     const { email, password } = req.body;
 
