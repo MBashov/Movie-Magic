@@ -21,7 +21,8 @@ movieController.get('/search', async (req, res) => {
 });
 
 movieController.get('/create', isAuth, (req, res) => {
-    res.render('movie/create');
+    const categories = getCategoriesViewData();
+    res.render('movie/create', { categories });
 });
 
 movieController.post('/create', isAuth, async (req, res) => {
