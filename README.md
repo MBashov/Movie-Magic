@@ -5,6 +5,8 @@
 ### Welcome to My First Repository! 🎉  
 This project is aimed at creating an **interactive platform** for movie enthusiasts. It offers a **unique and enriching experience** for users to manage movies. Users can **add, edit, and delete movies** in an intuitive and user-friendly interface. The app is built using **Node.js** and **MongoDB**.
 
+**Note**: The HTML and CSS for this project were provided by the university as part of the course materials.
+
 ---
 
 ## Table of Contents
@@ -62,8 +64,9 @@ This project uses the following technologies:
 - **Node.js**: JavaScript runtime environment for the backend.
 - **MongoDB**: NoSQL database to store movie data.
 - **Express.js**: Web framework for building the server.
-- **EJS**: Templating engine for rendering dynamic content on the frontend.
-- **CSS**: Styling for the app's user interface.
+- **Handlebars**: Templating engine for rendering dynamic content on the frontend.
+- **CSS**: Styling for the app's user interface  (provided by the university).
+- **HTML**: Structure for the web pages (provided by the university).
 
 ---
 
