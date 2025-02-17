@@ -52,8 +52,8 @@ Here are the main features of the Movie-Magic app:
 
 - **User Authentication**: Users can sign up and log in to access personalized content.
 - **Authorization**: Access to certain features is restricted to authorized users only.
-- **Movie Management**: Users can **add, edit**, and **delete** movies from their personal list.
-- **Search Functionality**: Easily search for movies in your collection.
+- **Movie Management**: Users can **add, edit**, and **delete** movies from their personal list. Users can also add actors to their movies.
+- **Search Functionality**: Easily search for movies in your application.
 
 ---
 
@@ -76,7 +76,7 @@ Once the app is set up, follow these steps to use it:
 
 1. **Sign Up / Log In**: Create an account or log in if you already have one.
 2. **Manage Movies**: Add movies to your collection by providing their title, description, and other relevant information.
-3. **Search Movies**: Use the search bar to find movies in your collection.
+3. **Search Movies**: Use the search bar to find movies in your application.
 4. **Edit or Delete**: Update or remove movies from your list as needed.
 
 
